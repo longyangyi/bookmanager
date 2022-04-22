@@ -2,13 +2,12 @@ package com.bookcode.controller;
 
 import com.bookcode.dao.BookDao;
 import com.bookcode.entity.Book;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 @Controller
 @RequestMapping("/book")
@@ -32,12 +31,6 @@ public class BookController {
         return "forward:/book/list";
     }
 
-    @GetMapping("/delete")
-    public String detele(Integer id) {
-        bookDao.deleteById(id);
-        return "forward:/book/list";
-    }
-
     @RequestMapping("/preUpdate/{id}")
     public ModelAndView preUpdate(@PathVariable("id")Integer id) {
         ModelAndView mav = new ModelAndView();
@@ -50,6 +43,24 @@ public class BookController {
     public String update(Book book) {
         bookDao.save(book);
         return "forward:/book/list";
+    }
+
+    @GetMapping("/delete")
+    public String detele(Integer id) {
+        bookDao.deleteById(id);
+        return "forward:/book/list";
+    }
+
+    @ResponseBody
+    @RequestMapping("/query")
+    public List<Book> findByName(String name) {
+        return bookDao.findByName("思想");
+    }
+
+    @ResponseBody
+    @RequestMapping("/randomlist")
+    public List<Book> randomList(String name) {
+        return bookDao.randomList(2);
     }
 }
 

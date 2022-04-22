@@ -1,7 +1,5 @@
 package com.bookcode.entity;
 
-import org.attoparser.dom.INestableNode;
-
 import javax.persistence.*;
 
 @Entity
